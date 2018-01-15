@@ -1,0 +1,5 @@
+.inbox.archived .inbox-archive {
+  background-image: url("./unarchive.svg"); }
+
+.inbox.archived .border-unread {
+  display: none; }
