@@ -1,17 +1,17 @@
-# Task
+# Inbox
 
-Task list and details as reusable component
+Inbox as reusable component
 
 
 ## Usage
 
 ### Install
 ```
-npm i @react-ag-components/task --save
+npm i @react-ag-components/inbox --save
 ```
 ### Use in your project
 ```
-import {Tasks} from '@react-ag-components/task'
+import {Inbox} from '@react-ag-components/inbox'
 ```
 Your page should look like this
 ```
@@ -32,17 +32,14 @@ componentWillReceiveProps(nextProps){
 }
 
 handleIdChange = (id) => {
-  hashHistory.push('/tasks/' + (id || ''))
+  hashHistory.push('/inbox/')
 }
 
 render() {
   return (
     <div>
 
-      <Tasks
-        id={this.state.id}
-        onChange={this.handleIdChange}
-      />
+      <Inbox />
 
     </div>
   )
@@ -54,7 +51,7 @@ render() {
 
 Get the repository
 ```
-git clone https://github.com/alphillips/task.git
+git clone https://github.com/alphillips/inbox.git
 ```
 
 Update dependencies
