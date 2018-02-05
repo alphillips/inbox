@@ -1,8 +1,8 @@
 import React from 'react'
 import { hashHistory } from 'react-router'
-import wrapPage from '@react-ag-components/core/lib/PageWrapper'
-import * as api from './../api'
-import ContentEditable from './../ContentEditable'
+import wrapPage from './../../../components/wrappers/PageWrapper'
+import * as api from './../../../services/api'
+import ContentEditable from './../../../components/ContentEditable'
 import Dropzone from 'react-dropzone'
 import BackButton from '@react-ag-components/back-button'
 import Messages from '@react-ag-components/messages'
@@ -17,25 +17,25 @@ class Mail extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      mails:[],
+      mails: [],
       success:props.success,
       error:props.error,
-      id: this.props.params.id || 1,
+      id: -1,
+      messageId: props.params.id || -1,
+      type: props.params.type || "MESSAGE",
       reply: '',
       replyState: false,
       showAttach: false,
       html: '',
+      subject: '',
       user: null,
       files: [],
-      // was expecting id generated from api but can we just pass it the root id instead?
-      // newMessageId: '',
-      // because we are getting this status from root message
       read: false,
-      archived: false
+      archived: false,
+      info: ""
     }
     this.replies = []
     this.handleReplyContent = this.handleReplyContent.bind(this)
-    this.filesId = {}
   }
 
   componentDidMount() {
@@ -48,28 +48,54 @@ class Mail extends React.Component {
     ).catch((error) => {
       console.log('User not loaded ' + error)
     })
-    api.getMail(this.state.id).then(
-      data => {
-        var threadMessage = data.linkedMessage
-        threadMessage.push(data)
-        this.setState((prevState, props) => ({
-          mails: threadMessage,
-          read: data.read,
-          archived: data.archived
-        }))
 
-        if(!this.state.read) {
-          let statusBody = {}
-          statusBody.id = this.state.id
-          statusBody.status = true
-          api.setRead(statusBody).then(
-            data => {
-              console.log(this.state.mails[0].subject + " set to read")
-            }
-          )
+    let expiryDate = "31/01/2018"
+    this.setState((prevState, props) => ({
+      info: "This notification will expire on " + expiryDate + "."
+    }))
+
+    if(this.state.type === "MESSAGE") {
+      api.getMail(this.state.messageId).then(
+        data => {
+          var threadMessage = data.linkedMessage
+          threadMessage.push(data)
+          this.setState((prevState, props) => ({
+            mails: threadMessage,
+            read: data.read,
+            archived: data.archived,
+            id: data.messageId,
+            subject: data.subject
+          }))
+
+          if(!this.state.read) {
+            let statusBody = {}
+            statusBody.messageId = this.state.id
+            statusBody.status = true
+          }
         }
-      }
-    )
+      )
+    }
+    else {
+      api.getMailFromAll(this.state.messageId).then(
+        data => {
+          var threadMessage = []
+          threadMessage.push(data)
+          this.setState((prevState, props) => ({
+            mails: threadMessage,
+            read: data.read,
+            archived: data.archived,
+            id: data.messageId,
+            subject: data.subject
+          }))
+
+          if(!this.state.read) {
+            let statusBody = {}
+            statusBody.messageId = this.state.id
+            statusBody.status = true
+          }
+        }
+      )
+    }
   }
 
   handleReplyState = () => {
@@ -95,47 +121,17 @@ class Mail extends React.Component {
   }
 
   handleSend = () => {
-    let mails = this.state.mails
-    let user = this.state.user
-
     let reply = {}
-    let d = new Date();
-    let seconds = Math.round(d.getTime() / 1000);
 
-    reply.messageTimestamp = {}
-    reply.messageTimestamp.epochSecond = seconds
-    reply.subject = mails[0].subject.indexOf("Re:") > -1 ? mails.subject :"Re: "+ mails.subject
+    reply.subject = this.state.subject.indexOf("Re:") > -1 ? this.state.subject :"Re: "+ this.state.subject
     reply.body = this.state.html
-    reply.fromParty = user.lastName + ' ' + user.firstName
-    reply.toParty = mails[0].fromName
-
-    if (this.state.files.length > 0) {
-      api.sendFiles(this.state.files).then(
-        data => {
-          this.filesId = data
-          console.log("Attachments have been submitted")
-        }
-      )
-    }
-
-    if(this.filesId.length > 0) {
-      let statusBody = {}
-      statusBody.messageId = this.state.id
-      statusBody.attachmentIds = this.filesId
-      api.updateMailFile(statusBody).then(
-        data => {
-          console.log("attachment attached to mail")
-        }
-      )
-    }
+    reply.linkedAttachment = this.state.files
+    reply.parentId = this.state.id
 
     api.sendMail(reply).then(
       data => {
-        this.props.setMessage({success:'Message '+'"'+  this.state.mails[0].subject +'"'+ ' has been sent'}),
+        this.props.setMessage({success:'Message '+'"'+  this.state.subject +'"'+ ' has been sent'}),
         hashHistory.push('/inbox')
-        // this.setState((prevState, props) => ({
-        //   newMessageId: data
-        // }))
       }
     )
   }
@@ -152,8 +148,8 @@ class Mail extends React.Component {
 
   handleArchive = (e) => {
     let statusBody = {}
-    statusBody.id = this.state.id
-    statusBody.status = true
+    statusBody.messageId = this.state.id
+    statusBody.archived = true
     api.setArchive(statusBody).then(
       data => {
         this.props.setMessage({success:'Message '+'"'+  this.state.mails[0].subject +'"'+ ' has been archived'})
@@ -166,8 +162,8 @@ class Mail extends React.Component {
 
   handleRestore = (e) => {
     let statusBody = {}
-    statusBody.id = this.state.id
-    statusBody.status = false
+    statusBody.messageId = this.state.id
+    statusBody.archived = false
     api.setArchive(statusBody).then(
       data => {
         this.props.setMessage({success:'Message '+'"'+  this.state.mails[0].subject +'"'+ ' has been unarchived'})
@@ -186,7 +182,7 @@ class Mail extends React.Component {
         const fileAsBinaryString = reader.result
         fileObj.name = file.name
         fileObj.mimeType = file.type
-        fileObj.size = file.size
+        fileObj.size = this.convertFromBytetoMB(file.size)
         fileObj.data = []
         fileObj.data.push(fileAsBinaryString)
         let thisStateFiles = this.state.files
@@ -211,9 +207,14 @@ class Mail extends React.Component {
     // retrive file from server and downloads it
   }
 
+  convertFromBytetoMB = (num) => {
+    return (num/1048576).toFixed(4);
+  }
+
   epochSecondToDate = (epochSecond) => {
-    var m = moment(epochSecond)
-    var s = m.format("D/M/YYYY")
+    var eps = epochSecond * 1000
+    var m = moment(eps)
+    var s = m.format("D/M/YYYY hh:mm:ss")
     return s
   }
 
@@ -221,6 +222,7 @@ class Mail extends React.Component {
     return (
     <div>
     <BackButton />
+
       <div className="" className={this.state.replyState ? "nexdoc-mail-container reply" : "nexdoc-mail-container"}>
 
         <LoadableSection>
@@ -244,7 +246,7 @@ class Mail extends React.Component {
                    <ul>
                      {
                        this.state.files.map((f, i) =>
-                          <li key={f.name+f.size} data-value={i} onClick={this.removeFile.bind(this)} key={f.name}>{f.name} - {f.size} bytes</li>
+                          <li key={f.name+f.size} data-value={i} onClick={this.removeFile.bind(this)} key={f.name}>{f.name} - {f.size} MB</li>
                         )
                      }
                    </ul>
@@ -262,13 +264,20 @@ class Mail extends React.Component {
               <div className="mail-from">From: <span className="text-normal">{reply.fromParty}</span>
                 {!this.state.replyState &&
                   <div>
-                    <button className="btn-reply-action reply" onClick={this.handleReplyState}>Reply</button>
-                      {!this.state.archived &&
-                        <button className="btn-archive" onClick={this.handleArchive}>Archive</button>
-                      }
-                      {this.state.archived &&
-                        <button className="btn-unarchive" onClick={this.handleRestore}>Unarchive</button>
-                      }
+                    {this.state.type === "MESSAGE" &&
+                      <div>
+                        {!this.state.archived &&
+                          <button className="btn-reply-action reply" onClick={this.handleReplyState}>Reply</button>
+                        }
+
+                        {!this.state.archived &&
+                          <button className="btn-archive" onClick={this.handleArchive}>Archive</button>
+                        }
+                        {this.state.archived &&
+                          <button className="btn-unarchive" onClick={this.handleRestore}>Unarchive</button>
+                        }
+                      </div>
+                    }
                   </div>
                 }
                 {this.state.replyState &&
@@ -279,7 +288,17 @@ class Mail extends React.Component {
                   </div>
                 }
               </div>
-              <div className="mail-subject-container"><span className="mail-subject">Subject: <span className="text-normal">{reply.subject}</span></span> <span className="mail-date">Sent: <span className="text-normal">{this.epochSecondToDate(reply.messageTimestamp.epochSecond)}</span></span></div>
+              <div className="mail-subject-container">
+                <span className="mail-subject">Subject: <span className="text-normal">{reply.subject}</span></span>
+                <span className="mail-date">Sent: <span className="text-normal">{this.epochSecondToDate(reply.messageTimestamp.epochSecond)}</span></span>
+                {this.state.type !== "MESSAGE" &&
+                  <span className="mail-date">Notice: <span className="text-normal">{this.state.info}</span></span>
+                }
+
+                {this.state.type === "MESSAGE" && reply.linkedAttachment &&
+                  <span className="mail-date">Attachment: <span className="text-normal">{reply.linkedAttachment.map((file, i) =>  file.name + " " )}</span></span>
+                }
+              </div>
               <div className="mail-body-container"><span className="mail-body" dangerouslySetInnerHTML={{__html: (reply.body)}}></span></div>
               {
                 this.state.mails.linkedAttachment &&

@@ -1,13 +1,12 @@
 import React from 'react'
-import { hashHistory, Link } from 'react-router'
-import wrapPage from '@react-ag-components/core/lib/PageWrapper'
 import PathwayList from '@react-ag-components/pathway-list'
 import Spinner from 'react-spinner-material'
-import * as api from './../api'
 import BackButton from '@react-ag-components/back-button'
 import Messages from '@react-ag-components/messages'
 import LoadableSection from '@react-ag-components/core/lib/LoadableSection'
 import moment from 'moment'
+
+import Archived from './Archived'
 
 
 import './inbox.css'
@@ -17,36 +16,19 @@ class Inbox extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      mails:{},
+      mails:props.mails || {},
+      archives:props.archives || {},
       success:props.success,
-      error:props.error
+      error:props.error,
+      attachment: false //will populate from data
     }
     this.handleArchive = this.handleArchive.bind(this, null)
-  }
-
-  componentDidMount() {
-    api.getMails().then(
-      data => {
-        this.setState((prevState, props) => ({
-          mails: data
-        }))
-      }
-    ).catch((error) => {
-      if(error && error.length > 0){
-        let messages = error.filter((e) => e.code != null).map((e) => e.message)
-        let message = messages.join('\n')
-        this.setState((prevState, props) => ({
-          error: message
-        }))
-        window.scrollTo(0, 0)
-      }
-    })
   }
 
   handleArchive = (e, mail) => {
     let statusBody = {}
     statusBody.id = mail.id
-    statusBody.status = true
+    statusBody.archived = true
     api.setArchive(statusBody).then(
       data => {
         this.setState((prevState, props) => ({
@@ -59,9 +41,14 @@ class Inbox extends React.Component {
   }
 
   epochSecondToDate = (epochSecond) => {
-    var m = moment(epochSecond)
-    var s = m.format("D/M/YYYY")
+    var eps = epochSecond * 1000
+    var m = moment(eps)
+    var s = m.format("D/M/YYYY hh:mm:ss")
     return s
+  }
+
+  openArchived = () => {
+    <Archived archives={this.state.archives} />
   }
 
   render() {
@@ -71,7 +58,7 @@ class Inbox extends React.Component {
         <Messages success={this.state.success} />
 
         <h1>Inbox</h1>
-        <Link to="/archived" className="btn-archived">View Archived</Link>
+        <a onClick={this.openArchived} className="btn-archived">View Archived</a>
 
         <LoadableSection>
 
@@ -82,13 +69,15 @@ class Inbox extends React.Component {
               { this.state.mails.map((mail) =>
                 <li className={"inbox-listing "+(!mail.read?"unread":"")} key={mail.messageId + mail.fromParty}>
                   <div className="border-unread"></div>
-                  <Link to={"/mail/"+mail.messageId}>
+                  <a href={"/mail/"+mail.messageId+"/"+mail.type}>
                     <span className="inbox-date">{this.epochSecondToDate(mail.messageTimestamp.epochSecond)}</span>
+                    {this.state.attachment &&
+                      <span className="inbox-attachment"></span>
+                    }
                     <span className="inbox-from">{mail.fromParty}</span>
                     <span className="inbox-subject">{mail.subject}</span>
                     <span className="inbox-body">{mail.body.replace(/<\/?[^>]+(>|$)/g, "")}</span>
-                  </Link>
-                  <button className="inbox-archive" onClick={this.handleArchive.bind(this, mail)}></button>
+                  </a>
                 </li>
               )}
             </PathwayList>
@@ -100,4 +89,4 @@ class Inbox extends React.Component {
     )
   }
 }
-export default wrapPage()(Inbox)
+export default (Inbox)

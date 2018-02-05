@@ -37,7 +37,6 @@
     font-weight: normal; }
   .nexdoc-mail .mail-date {
     display: block;
-    font-size: 90%;
     font-weight: bold;
     padding-top: 1em; }
   .nexdoc-mail .mail-body-container {
@@ -79,7 +78,8 @@
       background-image: url("../archive.svg"); }
   .nexdoc-mail .btn-unarchive {
     right: 10px;
-    top: -43px; }
+    top: -43px;
+    background-color: white; }
     .nexdoc-mail .btn-unarchive::before {
       background-image: url("../Archived/unarchive.svg"); }
   .nexdoc-mail .btn-reply-action.reply {

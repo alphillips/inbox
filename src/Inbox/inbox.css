@@ -44,7 +44,23 @@
       position: absolute;
       right: 24px;
       top: 38%;
+      opacity: 0.7;
+      font-size: 90%; }
+    .nexdoc-inbox .inbox .inbox-attachment {
+      position: absolute;
+      right: 24px;
+      top: 60%;
       opacity: 0.7; }
+      .nexdoc-inbox .inbox .inbox-attachment::before {
+        content: " ";
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        margin: 0 .4em -8px 0;
+        background-repeat: no-repeat;
+        background-size: auto 15px;
+        pointer-events: none;
+        background-image: url("./attach.svg"); }
     .nexdoc-inbox .inbox .inbox-archive {
       position: absolute;
       right: 24px;
