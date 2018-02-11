@@ -47,10 +47,7 @@ class Archived extends React.Component {
   };
 
   openMail = (id) => {
-    let mailItem = this.props.openMail(id)
-    this.setState((prevState, props) => ({
-      mailItem:mailItem
-    }));
+    this.props.openMail(id)
   }
 
   render() {
@@ -79,7 +76,7 @@ class Archived extends React.Component {
                       key={mail.messageId + mail.fromParty}
                     >
                       <div className="border-unread" />
-                      <a onClick={this.openMail(mail.messageId)} >
+                      <a onClick={this.openMail.bind(mail.messageId)} >
                         <span className="inbox-date">
                           {this.epochSecondToDate(
                             mail.messageTimestamp.epochSecond

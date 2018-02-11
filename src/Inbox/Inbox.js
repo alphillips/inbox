@@ -50,10 +50,7 @@ class Inbox extends React.Component {
   }
 
   openMail = (id) => {
-    let mailItem = this.props.openMail(id)
-    this.setState((prevState, props) => ({
-      mailItem:mailItem
-    }));
+    this.props.openMail(id)
   }
 
   showArchives = () => {
@@ -78,7 +75,7 @@ class Inbox extends React.Component {
               { this.state.mails.map((mail) =>
                 <li className={"inbox-listing "+(!mail.read?"unread":"")} key={mail.messageId + mail.fromParty}>
                   <div className="border-unread"></div>
-                  <a onClick={this.openMail(mail.messageId)} >
+                  <a onClick={this.openMail.bind(this, mail.messageId)} >
                     <span className="inbox-date">{this.epochSecondToDate(mail.messageTimestamp.epochSecond)}</span>
                     {this.state.attachment &&
                       <span className="inbox-attachment"></span>
