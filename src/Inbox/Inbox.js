@@ -7,6 +7,7 @@ import LoadableSection from '@react-ag-components/core/lib/LoadableSection'
 import moment from 'moment'
 
 import Archived from './Archived'
+import Mail from './Mail'
 
 
 import './inbox.css'
@@ -20,7 +21,8 @@ class Inbox extends React.Component {
       archives:props.archives || {},
       success:props.success,
       error:props.error,
-      attachment: false //will populate from data
+      attachment: false,
+      mailItem: {}
     }
     this.handleArchive = this.handleArchive.bind(this, null)
   }
@@ -47,8 +49,15 @@ class Inbox extends React.Component {
     return s
   }
 
-  openArchived = () => {
-    <Archived archives={this.state.archives} />
+  openMail = (id) => {
+    let mailItem = this.props.openMail(id)
+    this.setState((prevState, props) => ({
+      mailItem:mailItem
+    }));
+  }
+
+  showArchives = () => {
+
   }
 
   render() {
@@ -58,7 +67,7 @@ class Inbox extends React.Component {
         <Messages success={this.state.success} />
 
         <h1>Inbox</h1>
-        <a onClick={this.openArchived} className="btn-archived">View Archived</a>
+        <a onClick={this.showArchives} className="btn-archived">View Archived</a>
 
         <LoadableSection>
 
@@ -69,7 +78,7 @@ class Inbox extends React.Component {
               { this.state.mails.map((mail) =>
                 <li className={"inbox-listing "+(!mail.read?"unread":"")} key={mail.messageId + mail.fromParty}>
                   <div className="border-unread"></div>
-                  <a href={"/mail/"+mail.messageId+"/"+mail.type}>
+                  <a onClick={this.openMail(mail.messageId)} >
                     <span className="inbox-date">{this.epochSecondToDate(mail.messageTimestamp.epochSecond)}</span>
                     {this.state.attachment &&
                       <span className="inbox-attachment"></span>
@@ -81,6 +90,7 @@ class Inbox extends React.Component {
                 </li>
               )}
             </PathwayList>
+              <Archived archives={this.state.archives} openMail={this.openMail} />
           </div>
         }
 

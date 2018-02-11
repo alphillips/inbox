@@ -1,8 +1,7 @@
 import React from 'react'
 import { hashHistory } from 'react-router'
-import wrapPage from './../../../components/wrappers/PageWrapper'
-import * as api from './../../../services/api'
-import ContentEditable from './../../../components/ContentEditable'
+import wrapPage from '@react-ag-components/core/lib/PageWrapper'
+import ContentEditable from './../..//ContentEditable'
 import Dropzone from 'react-dropzone'
 import BackButton from '@react-ag-components/back-button'
 import Messages from '@react-ag-components/messages'
@@ -28,7 +27,6 @@ class Mail extends React.Component {
       showAttach: false,
       html: '',
       subject: '',
-      user: null,
       files: [],
       read: false,
       archived: false,
@@ -39,15 +37,6 @@ class Mail extends React.Component {
   }
 
   componentDidMount() {
-    api.getUser().then(
-      data => {
-        this.setState((prevState, props) => ({
-          user: data
-        }))
-      }
-    ).catch((error) => {
-      console.log('User not loaded ' + error)
-    })
 
     let expiryDate = "31/01/2018"
     this.setState((prevState, props) => ({
