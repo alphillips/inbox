@@ -1,7 +1,8 @@
 import React from 'react'
 import { hashHistory } from 'react-router'
-import wrapPage from '@react-ag-components/core/lib/PageWrapper'
-import ContentEditable from './../..//ContentEditable'
+import wrapPage from './../../../components/wrappers/PageWrapper'
+import * as api from './../../../services/api'
+import ContentEditable from './../../../components/ContentEditable'
 import Dropzone from 'react-dropzone'
 import BackButton from '@react-ag-components/back-button'
 import Messages from '@react-ag-components/messages'
@@ -20,13 +21,14 @@ class Mail extends React.Component {
       success:props.success,
       error:props.error,
       id: -1,
-      messageId: props.params.id || -1,
-      type: props.params.type || "MESSAGE",
+      messageId: parseInt(props.messageId) || -1,
+      type: props.type || "MESSAGE",
       reply: '',
       replyState: false,
       showAttach: false,
       html: '',
       subject: '',
+      user: null,
       files: [],
       read: false,
       archived: false,
@@ -37,6 +39,7 @@ class Mail extends React.Component {
   }
 
   componentDidMount() {
+    this.props.pollUnreadCount()
 
     let expiryDate = "31/01/2018"
     this.setState((prevState, props) => ({
@@ -207,10 +210,14 @@ class Mail extends React.Component {
     return s
   }
 
+  onClose = () => {
+    this.props.callbackCloseSelf()
+  }
+
   render() {
     return (
     <div>
-    <BackButton />
+      <a className="back-button uikit-direction-link uikit-direction-link--left" onClick={this.onClose}> Back </a>
 
       <div className="" className={this.state.replyState ? "nexdoc-mail-container reply" : "nexdoc-mail-container"}>
 

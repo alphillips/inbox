@@ -16,7 +16,7 @@
     "clean": "nwb clean-module && nwb clean-demo",
     "build-css": "node-sass src/ -o src/",
     "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
-    "start-server": "nodemon --watch server/start.js",
+    "start-server": "node server/start.js",
     "start-demo": "nwb serve-react-demo",
     "start": "npm-run-all --parallel start-demo start-server watch-css",
     "test": "nwb test-react",
