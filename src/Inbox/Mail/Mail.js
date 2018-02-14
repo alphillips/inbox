@@ -1,8 +1,8 @@
 import React from 'react'
 import { hashHistory } from 'react-router'
 import wrapPage from '@react-ag-components/core/lib/PageWrapper'
-import * as api from './../../../services/api'
-import ContentEditable from './../../../components/ContentEditable'
+import * as api from './../../../src/services/api'
+import ContentEditable from './../../ContentEditable'
 import Dropzone from 'react-dropzone'
 import BackButton from '@react-ag-components/back-button'
 import Messages from '@react-ag-components/messages'
@@ -168,20 +168,18 @@ class Mail extends React.Component {
     files.forEach(file => {
       const reader = new FileReader()
       const fileObj = {}
+      reader.readAsDataURL(file)
       reader.onload = () => {
-        const fileAsBinaryString = reader.result
         fileObj.name = file.name
         fileObj.mimeType = file.type
         fileObj.size = this.convertFromBytetoMB(file.size)
-        fileObj.data = []
-        fileObj.data.push(fileAsBinaryString)
+        fileObj.data = reader.result
         let thisStateFiles = this.state.files
         thisStateFiles.push(fileObj)
         this.setState((prevState, props) => ({
           files: thisStateFiles
         }))
       }
-      reader.readAsBinaryString(file)
     })
   }
 
