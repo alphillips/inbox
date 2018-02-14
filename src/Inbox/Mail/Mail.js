@@ -1,12 +1,11 @@
 import React from 'react'
 import { hashHistory } from 'react-router'
-import wrapPage from './../../../components/wrappers/PageWrapper'
+import wrapPage from '@react-ag-components/core/lib/PageWrapper'
 import * as api from './../../../services/api'
 import ContentEditable from './../../../components/ContentEditable'
 import Dropzone from 'react-dropzone'
 import BackButton from '@react-ag-components/back-button'
 import Messages from '@react-ag-components/messages'
-import LoadableSection from '@react-ag-components/core/lib/LoadableSection'
 import moment from 'moment'
 
 
@@ -39,7 +38,6 @@ class Mail extends React.Component {
   }
 
   componentDidMount() {
-    this.props.pollUnreadCount()
 
     let expiryDate = "31/01/2018"
     this.setState((prevState, props) => ({
@@ -49,7 +47,7 @@ class Mail extends React.Component {
     if(this.state.type === "MESSAGE") {
       api.getMail(this.state.messageId).then(
         data => {
-          var threadMessage = data.linkedMessage
+          let threadMessage = data.linkedMessage
           threadMessage.push(data)
           this.setState((prevState, props) => ({
             mails: threadMessage,
@@ -221,7 +219,6 @@ class Mail extends React.Component {
 
       <div className="" className={this.state.replyState ? "nexdoc-mail-container reply" : "nexdoc-mail-container"}>
 
-        <LoadableSection>
         <div className="nexdoc-mail">
           <ContentEditable html={this.state.html} onChange={this.handleReplyContent} className={this.state.replyState? "reply-area reply" : "reply-area"}></ContentEditable>
 
@@ -304,7 +301,6 @@ class Mail extends React.Component {
           )}
         </div>
 
-      </LoadableSection>
       </div>
     </div>
     )

@@ -139,4 +139,13 @@ $inbox-border: darken(whitesmoke, 20%);
     }
   }
 
+  .inbox.archived {
+    .inbox-archive {
+      background-image: url("./unarchive.svg");
+    }
+    .border-unread {
+      display: none;
+    }
+  }
+
 }

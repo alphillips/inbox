@@ -81,7 +81,7 @@
     top: -43px;
     background-color: white; }
     .nexdoc-mail .btn-unarchive::before {
-      background-image: url("../Archived/unarchive.svg"); }
+      background-image: url("../unarchive.svg"); }
   .nexdoc-mail .btn-reply-action.reply {
     right: 10px;
     top: 28px;

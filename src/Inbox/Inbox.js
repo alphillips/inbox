@@ -1,13 +1,12 @@
 import React from "react";
 import { hashHistory, Link } from "react-router";
-import wrapPage from "./../../components/wrappers/PageWrapper";
+import wrapPage from '@react-ag-components/core/lib/PageWrapper'
 import PathwayList from "@react-ag-components/pathway-list";
 import Spinner from "react-spinner-material";
 import * as api from "./../../services/api";
 import BackButton from "@react-ag-components/back-button";
 import Messages from "@react-ag-components/messages";
 import Mail from "./Mail";
-import LoadableSection from "@react-ag-components/core/lib/LoadableSection";
 import moment from "moment";
 
 import "./inbox.css";
@@ -29,7 +28,6 @@ class Inbox extends React.Component {
   }
 
   componentDidMount() {
-    this.props.pollUnreadCount();
 
     api.getMails().then(data => {
       this.setState((prevState, props) => ({
@@ -72,6 +70,18 @@ class Inbox extends React.Component {
   };
 
   render() {
+
+    var mailNode = null;
+    if (this.state.showMail){
+      mailNode = (
+        <Mail
+        messageId={this.state.messageId}
+        type={this.state.type}
+        callbackCloseSelf={this.callbackCloseSelf}
+        pollUnreadCount={this.props.pollUnreadCount} />
+      )
+    }
+
     return (
       <div className="nexdoc-inbox">
         {!this.state.showMail && (
@@ -88,7 +98,6 @@ class Inbox extends React.Component {
               {this.state.showArchived && <span>Inbox</span>}
             </Link>
 
-            <LoadableSection>
               {this.state.mails &&
                 this.state.mails.length > 0 && (
                   <div className="inbox">
@@ -104,7 +113,7 @@ class Inbox extends React.Component {
                             <div className="border-unread" />
                             <Link
                               onClick={this.setupMail.bind(
-                                this,
+                                null,
                                 mail.messageId,
                                 mail.type
                               )}
@@ -140,7 +149,7 @@ class Inbox extends React.Component {
                             <div className="border-unread" />
                             <Link
                               onClick={this.setupMail.bind(
-                                this,
+                                null,
                                 mail.messageId,
                                 mail.type
                               )}
@@ -168,17 +177,11 @@ class Inbox extends React.Component {
                     </PathwayList>
                   </div>
                 )}
-            </LoadableSection>
           </div>
         )}
 
         {this.state.showMail && (
-          <Mail
-            messageId={this.state.messageId}
-            type={this.state.type}
-            pollUnreadCount={this.props.pollUnreadCount}
-            callbackCloseSelf={this.callbackCloseSelf}
-          />
+          mailNode
         )}
       </div>
     );

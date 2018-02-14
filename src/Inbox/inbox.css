@@ -107,3 +107,7 @@
       width: 80%;
       white-space: nowrap;
       opacity: 0.7; }
+  .nexdoc-inbox .inbox.archived .inbox-archive {
+    background-image: url("./unarchive.svg"); }
+  .nexdoc-inbox .inbox.archived .border-unread {
+    display: none; }
