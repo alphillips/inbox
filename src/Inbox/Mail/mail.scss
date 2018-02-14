@@ -25,8 +25,13 @@ $notification-info: darken(#00C2ED, 15%);
     }
   }
 
-  p, span {
-    max-width: unset!important;
+  span {
+    max-width: none!important;
+  }
+
+  p {
+    max-width: none!important;
+    margin: 0!important;
   }
 
   .reply-area {

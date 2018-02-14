@@ -13,8 +13,11 @@
     border-top: 1px solid #c4c4c4; }
     .nexdoc-mail.reply .btn-archive, .nexdoc-mail.reply .btn-unarchive {
       top: 163px; }
-  .nexdoc-mail p, .nexdoc-mail span {
-    max-width: unset !important; }
+  .nexdoc-mail span {
+    max-width: none !important; }
+  .nexdoc-mail p {
+    max-width: none !important;
+    margin: 0 !important; }
   .nexdoc-mail .reply-area {
     height: 150px;
     border: 1px solid #ddd;

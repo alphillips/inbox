@@ -1,6 +1,5 @@
 var express = require('express')
 var bodyParser = require('body-parser')
-var router = express.Router();
 var router2 = express.Router();
 var router3 = express.Router();
 
@@ -12,6 +11,7 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
 
 require('./mail.js')(router2);
 require('./mailandnotification.js')(router3);
