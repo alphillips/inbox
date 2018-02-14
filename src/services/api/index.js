@@ -1,4 +1,3 @@
-const URL_BASE = (process.env.API_HOST || '') + '/api/'
 const URL_BASE2 = '/message-rest-ui/api/'
 const URL_BASE3 = '/inbox-rest-ui/api/'
 

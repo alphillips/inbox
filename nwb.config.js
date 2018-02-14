@@ -3,5 +3,10 @@ module.exports = {
   npm: {
     esModules: true,
     umd: false
+  },
+  devServer:{
+    proxy:{
+      "/api": "http://localhost:3000"
+    }
   }
 }
