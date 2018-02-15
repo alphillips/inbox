@@ -1,5 +1,4 @@
 import React from 'react'
-import { hashHistory } from 'react-router'
 import wrapPage from '@react-ag-components/core/lib/PageWrapper'
 import * as api from './../../api'
 import Dropzone from 'react-dropzone'
@@ -119,8 +118,10 @@ class Mail extends React.Component {
 
     api.sendMail(reply).then(
       data => {
-        this.props.setMessage({success:'Message '+'"'+  this.state.subject +'"'+ ' has been sent'}),
-        hashHistory.push('/inbox')
+        this.setState((prevState, props) => ({
+          success: 'Message '+'"'+  this.state.subject +'"'+ ' has been sent'
+        }))
+        this.props.callbackCloseSelf()
       }
     )
   }
@@ -141,8 +142,10 @@ class Mail extends React.Component {
     statusBody.archived = true
     api.setArchive(statusBody).then(
       data => {
-        this.props.setMessage({success:'Message '+'"'+  this.state.mails[0].subject +'"'+ ' has been archived'})
-        hashHistory.push('/inbox')
+        this.setState((prevState, props) => ({
+          success: 'Message '+'"'+  this.state.mails[0].subject +'"'+ ' has been archived'
+        }))
+        this.props.callbackCloseSelf()
       }
     ).catch((error) => {
       console.log(error + " with archiving mail")
@@ -155,8 +158,10 @@ class Mail extends React.Component {
     statusBody.archived = false
     api.setArchive(statusBody).then(
       data => {
-        this.props.setMessage({success:'Message '+'"'+  this.state.mails[0].subject +'"'+ ' has been unarchived'})
-        hashHistory.push('/inbox')
+        this.setState((prevState, props) => ({
+          success: 'Message '+'"'+  this.state.mails[0].subject +'"'+ ' has been unarchived'
+        }))
+        this.props.callbackCloseSelf()
       }
     ).catch((error) => {
       console.log(error + " with restoring mail")

@@ -1,8 +1,7 @@
 import React from "react";
-import { hashHistory, Link } from "react-router";
+import { Link } from "react-router";
 import wrapPage from '@react-ag-components/core/lib/PageWrapper'
 import PathwayList from "@react-ag-components/pathway-list";
-import Spinner from "react-spinner-material";
 import * as api from "./../api";
 import BackButton from "@react-ag-components/back-button";
 import Messages from "@react-ag-components/messages";

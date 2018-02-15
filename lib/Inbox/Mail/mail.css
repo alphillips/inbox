@@ -27,7 +27,8 @@
     .nexdoc-mail .reply-area.reply {
       display: block;
       background-color: white;
-      padding: 10px; }
+      padding: 10px;
+      width: 100%; }
   .nexdoc-mail .file-drop-zone {
     margin-top: 10px;
     background-color: white; }
