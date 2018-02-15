@@ -206,6 +206,7 @@ class Mail extends React.Component {
 
   onClose = () => {
     this.props.callbackCloseSelf()
+    this.props.callbackSetMessage("success", "")
   }
 
   render() {
