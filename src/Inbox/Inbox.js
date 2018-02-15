@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 import PathwayList from "@react-ag-components/pathway-list";
 import * as api from "./../api";
+import BackButton from "@react-ag-components/back-button";
 import Messages from "@react-ag-components/messages";
 import Mail from "./Mail";
 import moment from "moment";
