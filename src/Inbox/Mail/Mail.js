@@ -218,9 +218,7 @@ class Mail extends React.Component {
       <div className="" className={this.state.replyState ? "nexdoc-mail-container reply" : "nexdoc-mail-container"}>
 
         <div className="nexdoc-mail">
-          <div contentEditable="false">
-            <ContentEditable suppressContentEditableWarning={true} html={this.state.html} onChange={this.handleReplyContent} className={this.state.replyState? "reply-area reply" : "reply-area"}></ContentEditable>
-          </div>
+          <ContentEditable html={this.state.html} onChange={this.handleReplyContent} className={this.state.replyState? "reply-area reply" : "reply-area"}></ContentEditable>
 
           {this.state.showAttach &&
             <div>
