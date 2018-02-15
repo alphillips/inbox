@@ -1,7 +1,7 @@
 import React from 'react'
 import { hashHistory } from 'react-router'
 import wrapPage from '@react-ag-components/core/lib/PageWrapper'
-import * as api from './../../../src/services/api'
+import * as api from './../../api'
 import ContentEditable from './../../ContentEditable'
 import Dropzone from 'react-dropzone'
 import BackButton from '@react-ag-components/back-button'
