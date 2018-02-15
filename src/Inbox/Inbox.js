@@ -49,7 +49,8 @@ class Inbox extends React.Component {
 
   showArchived = () => {
     this.setState((prevState, props) => ({
-      showArchived: !this.state.showArchived
+      showArchived: !this.state.showArchived,
+      success: ""
     }));
   };
 

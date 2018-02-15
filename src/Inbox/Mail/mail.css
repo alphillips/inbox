@@ -158,3 +158,6 @@
     cursor: pointer; }
   .mail-attachment:hover {
     background-color: white; }
+
+.back-button {
+  margin-top: 1em; }
