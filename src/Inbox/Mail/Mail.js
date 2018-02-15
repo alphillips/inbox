@@ -1,8 +1,6 @@
 import React from 'react'
-import wrapPage from '@react-ag-components/core/lib/PageWrapper'
 import * as api from './../../api'
 import Dropzone from 'react-dropzone'
-import BackButton from '@react-ag-components/back-button'
 import Messages from '@react-ag-components/messages'
 import moment from 'moment'
 
@@ -171,7 +169,7 @@ class Mail extends React.Component {
         fileObj.name = file.name
         fileObj.mimeType = file.type
         fileObj.size = this.convertFromBytetoMB(file.size)
-        fileObj.data = reader.result
+        fileObj.data = unescape(encodeURIComponent(reader.result))
         let thisStateFiles = this.state.files
         thisStateFiles.push(fileObj)
         this.setState((prevState, props) => ({
@@ -303,4 +301,4 @@ class Mail extends React.Component {
     )
   }
 }
-export default wrapPage()(Mail)
+export default Mail
