@@ -169,7 +169,7 @@ class Mail extends React.Component {
         fileObj.name = file.name
         fileObj.mimeType = file.type
         fileObj.size = this.convertFromBytetoMB(file.size)
-        fileObj.data = unescape(encodeURIComponent(reader.result.split(',')[2]))
+        fileObj.data = unescape(encodeURIComponent(reader.result.split(',')[1]))
         let thisStateFiles = this.state.files
         thisStateFiles.push(fileObj)
         this.setState((prevState, props) => ({
