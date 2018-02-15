@@ -28,7 +28,8 @@
       display: block;
       background-color: white;
       padding: 10px;
-      width: 100%; }
+      width: 97%;
+      resize: none; }
   .nexdoc-mail .file-drop-zone {
     margin-top: 10px;
     background-color: white; }
