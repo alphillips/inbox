@@ -2,7 +2,6 @@ import React from 'react'
 import { hashHistory } from 'react-router'
 import wrapPage from '@react-ag-components/core/lib/PageWrapper'
 import * as api from './../../api'
-import ContentEditable from './../../ContentEditable'
 import Dropzone from 'react-dropzone'
 import BackButton from '@react-ag-components/back-button'
 import Messages from '@react-ag-components/messages'
@@ -218,7 +217,7 @@ class Mail extends React.Component {
       <div className="" className={this.state.replyState ? "nexdoc-mail-container reply" : "nexdoc-mail-container"}>
 
         <div className="nexdoc-mail">
-          <ContentEditable html={this.state.html} onChange={this.handleReplyContent} className={this.state.replyState? "reply-area reply" : "reply-area"}></ContentEditable>
+          <textarea value={this.state.html} onChange={this.handleReplyContent} className={this.state.replyState? "reply-area reply" : "reply-area"}></textarea>
 
           {this.state.showAttach &&
             <div>
