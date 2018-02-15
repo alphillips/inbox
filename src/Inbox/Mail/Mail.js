@@ -118,7 +118,7 @@ class Mail extends React.Component {
 
     api.sendMail(reply).then(
       data => {
-        this.props.setMessage({success:'Message '+'"'+  this.state.subject +'"'+ ' has been sent'}),
+        this.props.callbackSetMessage("success", 'Message '+'"'+  this.state.subject +'"'+ ' has been sent'),
         this.props.callbackCloseSelf()
       }
     )
@@ -140,7 +140,7 @@ class Mail extends React.Component {
     statusBody.archived = true
     api.setArchive(statusBody).then(
       data => {
-        this.props.setMessage({success:'Message '+'"'+  this.state.mails[0].subject +'"'+ ' has been archived'})
+        this.props.callbackSetMessage("success",  'Message '+'"'+  this.state.mails[0].subject +'"'+ ' has been archived')
         this.props.callbackCloseSelf()
       }
     ).catch((error) => {
@@ -154,7 +154,7 @@ class Mail extends React.Component {
     statusBody.archived = false
     api.setArchive(statusBody).then(
       data => {
-        this.props.setMessage({success:'Message '+'"'+  this.state.mails[0].subject +'"'+ ' has been unarchived'})
+        this.props.callbackSetMessage("success", 'Message '+'"'+  this.state.mails[0].subject +'"'+ ' has been unarchived')
         this.props.callbackCloseSelf()
       }
     ).catch((error) => {

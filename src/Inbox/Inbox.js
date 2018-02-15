@@ -67,6 +67,12 @@ class Inbox extends React.Component {
       showMail: false
     }));
   };
+  callbackSetMessage = (type,msg) => {
+    this.setState((prevState, props) => ({
+      [type]:msg
+    }));
+  }
+
 
   render() {
 
@@ -77,7 +83,7 @@ class Inbox extends React.Component {
         messageId={this.state.messageId}
         type={this.state.type}
         callbackCloseSelf={this.callbackCloseSelf}
-        pollUnreadCount={this.props.pollUnreadCount} />
+        callbackSetMessage={this.callbackSetMessage} />
       )
     }
 
