@@ -28,3 +28,6 @@ export function sendMail(mail){
 export function sendFile(file){
   return post(URL_BASE2 + 'v1/mail/new/attachments', file)
 }
+export function getMailAttachment(id){
+  return get(URL_BASE2 + 'v1/mail/attachment/download/' + id)
+}

@@ -187,8 +187,18 @@ class Mail extends React.Component {
       files: array
     }))
   }
-  getfile = (e) => {
-    // retrive file from server and downloads it
+
+  getfile = (id) => {
+    let fileData = {}
+    api.getMailAttachment(id).then(
+      data => {
+        fileData = data
+      }
+    )
+
+    var dlnk = document.getElementById("downloadLink");
+      dlnk.href = pdfdata;
+      dlnk.click();
   }
 
   convertFromBytetoMB = (num) => {
@@ -284,14 +294,16 @@ class Mail extends React.Component {
                 }
 
                 {this.state.type === "MESSAGE" && reply.linkedAttachment &&
-                  <span className="mail-date">Attachment: <span className="text-normal">{reply.linkedAttachment.map((file, i) =>  file.name + " " )}</span></span>
+                  <span className="mail-attachment">Attachment:
+                    <span className="text-normal">
+                      {reply.linkedAttachment.map((file, i) =>
+                        <Link className="mail-attachment" onClick={this.getfile.bind(this, file.externalRefId)}> {file.name} + " " </Link>
+                      )}
+                    </span>
+                  </span>
                 }
               </div>
               <div className="mail-body-container"><span className="mail-body" dangerouslySetInnerHTML={{__html: (reply.body)}}></span></div>
-              {
-                this.state.mails.linkedAttachment &&
-                <button className="mail-attachment" data-value={reply.linkedAttachment.name} onClick={this.getfile.bind(this)}><span>{reply.linkedAttachment.name}</span></button>
-              }
             </div>
           )}
         </div>
