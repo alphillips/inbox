@@ -190,10 +190,10 @@ class Mail extends React.Component {
   }
 
   getfile = (id) => {
-    let data = {}
+    let fdata = {}
     api.getMailAttachment(id).then(
-      data => {
-        data = data
+      (data) => {
+        fdata = data
       }
     )
 
