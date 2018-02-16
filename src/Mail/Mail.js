@@ -299,6 +299,7 @@ class Mail extends React.Component {
                 {this.state.type === "MESSAGE" && reply.linkedAttachment &&
                   <span className="mail-date">Attachment:
                     <span className="text-normal">
+                      <a id="downloadLink" /> 
                       {reply.linkedAttachment.map((file, i) =>
                         <Link key={file.externalRefId} className="mail-attachment" onClick={this.getfile.bind(this, file.externalRefId)}> {file.name} {" "} </Link>
                       )}
