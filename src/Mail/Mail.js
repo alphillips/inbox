@@ -190,20 +190,19 @@ class Mail extends React.Component {
   }
 
   getfile = (id) => {
-    let fdata = {}
     api.getMailAttachment(id).then(
       (data) => {
-        fdata = data
+        let fileHeader = "data:"+data.mimeType+";base64,"
+
+        let fileData = fileHeader + data.data
+
+        var dlnk = document.getElementById("downloadLink");
+          dlnk.href = fileData;
+          dlnk.click();
       }
     )
 
-    let fileHeader = "data:"+data.mimeType+";base64,"
 
-    let fileData = fileHeader + data.data
-
-    var dlnk = document.getElementById("downloadLink");
-      dlnk.href = fileData;
-      dlnk.click();
   }
 
   convertFromBytetoMB = (num) => {
