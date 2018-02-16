@@ -197,7 +197,9 @@ class Mail extends React.Component {
       }
     )
 
-    let fileData = data.data
+    let fileHeader = "data:"+data.mimeType+";base64,"
+
+    let fileData = fileHeader + data.data
 
     var dlnk = document.getElementById("downloadLink");
       dlnk.href = fileData;
@@ -299,7 +301,7 @@ class Mail extends React.Component {
                 {this.state.type === "MESSAGE" && reply.linkedAttachment &&
                   <span className="mail-date">Attachment:
                     <span className="text-normal">
-                      <a id="downloadLink" /> 
+                      <a id="downloadLink" />
                       {reply.linkedAttachment.map((file, i) =>
                         <Link key={file.externalRefId} className="mail-attachment" onClick={this.getfile.bind(this, file.externalRefId)}> {file.name} {" "} </Link>
                       )}
