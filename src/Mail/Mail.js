@@ -189,14 +189,14 @@ class Mail extends React.Component {
     }))
   }
 
-  getfile = (id) => {
+  downloadFile = (id) => {
     api.getMailAttachment(id).then(
       (data) => {
         let fileHeader = "data:"+data.mimeType+";base64,"
 
-        let fileData = data.data
+        let fileData = fileHeader + data.data
 
-        var dlnk = document.getElementById("downloadLink");
+        var dlnk = document.getElementById("downloadLink" + id);
           dlnk.href = fileData;
           dlnk.click();
       }
@@ -298,9 +298,11 @@ class Mail extends React.Component {
                 {this.state.type === "MESSAGE" && reply.linkedAttachment &&
                   <span className="mail-date">Attachment:
                     <span className="text-normal">
-                      <a id="downloadLink" />
                       {reply.linkedAttachment.map((file, i) =>
-                        <Link key={file.externalRefId} className="mail-attachment" onClick={this.getfile.bind(this, file.externalRefId)}> {file.name} {" "} </Link>
+                        <div>
+                        <a id={"downloadLink"+file.externalRefId} download={file.name}/>
+                        <Link key={file.externalRefId} className="mail-attachment" onClick={this.downloadFile.bind(this, file.externalRefId)}> {file.name} {" "} </Link>
+                        </div>
                       )}
                     </span>
                   </span>
