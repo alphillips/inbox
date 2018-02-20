@@ -40,6 +40,10 @@
     font-size: 90%; }
   .nexdoc-mail .text-normal {
     font-weight: normal; }
+    .nexdoc-mail .text-normal div {
+      display: inline-block; }
+    .nexdoc-mail .text-normal .mail-attachment {
+      margin-left: 5px; }
   .nexdoc-mail .mail-date {
     display: block;
     font-weight: bold;
@@ -152,7 +156,7 @@
     display: inline-block;
     width: 24px;
     height: 18px;
-    margin: 0 .4em -5px 0;
+    margin: 0 0 -5px 0;
     background-repeat: no-repeat;
     background-size: auto 18px;
     cursor: pointer; }

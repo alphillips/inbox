@@ -63,6 +63,12 @@ $notification-info: darken(#00C2ED, 15%);
 
   .text-normal {
     font-weight: normal;
+    div {
+      display: inline-block;
+    }
+    .mail-attachment {
+      margin-left: 5px;
+    }
   }
   .mail-date {
     display: block;
@@ -227,7 +233,7 @@ $notification-info: darken(#00C2ED, 15%);
     display: inline-block;
     width: 24px;
     height: 18px;
-    margin: 0 .4em -5px 0;
+    margin: 0 0 -5px 0;
     background-repeat: no-repeat;
     background-size: auto 18px;
     cursor: pointer;

@@ -301,7 +301,7 @@ class Mail extends React.Component {
                       {reply.linkedAttachment.map((file, i) =>
                         <div key={file.externalRefId}>
                         <a id={"downloadLink"+file.externalRefId} download={file.name}/>
-                        <Link className="mail-attachment" onClick={this.downloadFile.bind(this, file.externalRefId)}> {file.name} {" "} </Link>
+                        <Link className="mail-attachment" onClick={this.downloadFile.bind(this, file.externalRefId)}> {file.name}({file.size}Mb){" "} </Link>
                         </div>
                       )}
                     </span>
