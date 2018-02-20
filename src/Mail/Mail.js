@@ -17,7 +17,7 @@ class Mail extends React.Component {
       success:props.success,
       error:props.error,
       id: -1,
-      messageId: parseInt(props.messageId) || -1,
+      messageId: props.messageId || -1,
       type: props.type || "MESSAGE",
       reply: '',
       replyState: false,
