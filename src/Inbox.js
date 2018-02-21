@@ -25,8 +25,21 @@ class Inbox extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
+    api.getMails().then(data => {
+      this.setState((prevState, props) => ({
+        mails: data
+      }));
+    });
 
+    api.getArchived().then(data => {
+      this.setState((prevState, props) => ({
+        archives: data
+      }));
+    });
+  }
+
+  componentWillReceiveProps = () => {
     api.getMails().then(data => {
       this.setState((prevState, props) => ({
         mails: data
