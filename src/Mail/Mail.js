@@ -411,7 +411,7 @@ class Mail extends React.Component {
                                   )}
                                 >
                                   {" "}
-                                  {file.name}({file.size}){" "}
+                                  {file.name} ({file.size}){" "}
                                 </Link>
                               </div>
                             ))}
