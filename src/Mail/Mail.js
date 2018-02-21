@@ -181,7 +181,7 @@ class Mail extends React.Component {
       reader.onload = () => {
         fileObj.name = file.name;
         fileObj.mimeType = file.type;
-        fileObj.blah = this.bytesToSize(file.size);
+        fileObj.size = this.bytesToSize(file.size);
         fileObj.data = unescape(
           encodeURIComponent(reader.result.split(",")[1])
         );
