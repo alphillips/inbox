@@ -105,6 +105,7 @@ $inbox-border: darken(whitesmoke, 20%);
     .inbox-listing{
       border-color: $inbox-border!important;
       position: relative!important;
+      cursor: pointer;
     }
 
     .unread {

@@ -82,7 +82,8 @@
         opacity: 1; }
     .nexdoc-inbox .inbox .inbox-listing {
       border-color: #c2c2c2 !important;
-      position: relative !important; }
+      position: relative !important;
+      cursor: pointer; }
     .nexdoc-inbox .inbox .unread {
       position: relative; }
       .nexdoc-inbox .inbox .unread .border-unread {
