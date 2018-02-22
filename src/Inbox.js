@@ -39,7 +39,7 @@ class Inbox extends React.Component {
     });
   }
 
-  componentWillReceiveProps = () => {
+  updateList = () => {
     api.getMails().then(data => {
       this.setState((prevState, props) => ({
         mails: data
@@ -79,7 +79,10 @@ class Inbox extends React.Component {
     this.setState((prevState, props) => ({
       showMail: false
     }));
+
+    this.updateList()
   };
+  
   callbackSetMessage = (type,msg) => {
     this.setState((prevState, props) => ({
       [type]:msg
