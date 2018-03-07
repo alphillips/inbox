@@ -670,6 +670,10 @@ var m8 = {
     "epochSecond": 1413888800,
     "nano": 0
   },
+  "expiryTimestamp": {
+    "epochSecond": 1413888800,
+    "nano": 0
+  },
   "subject": "Happy Friday + Some free fishes-Mario8",
   "body": "A little <strong>treat</strong> for you In the meantime, click here for early access to the first 100 fishes in both the solid and line style. Did I say 100, I mean 200.  Sign up now.A little treat for you In the meantime, click here for early access to the first 100 fishes in both the solid and line style. Did I say 100, I mean 200.  Sign up now.",
   "fromPartyType": "string",
@@ -689,6 +693,10 @@ var m9 = {
   "type": "NOTIFICATION",
   "messageId": "9",
   "messageTimestamp": {
+    "epochSecond": 1413888800,
+    "nano": 0
+  },
+  "expiryTimestamp": {
     "epochSecond": 1413888800,
     "nano": 0
   },
