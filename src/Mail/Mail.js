@@ -33,11 +33,6 @@ class Mail extends React.Component {
   }
 
   componentDidMount() {
-    let expiryDate = "31/01/2018";
-    this.setState((prevState, props) => ({
-      info: "This notification will expire on " + expiryDate + "."
-    }));
-
     if (this.state.type === "MESSAGE") {
       api.getMail(this.state.messageId).then(data => {
         let threadMessage = data.linkedMessage;
