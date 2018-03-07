@@ -14,6 +14,7 @@ class Mail extends React.Component {
       mails: [],
       success: props.success,
       error: props.error,
+      info: props.info,
       id: -1,
       messageId: props.messageId || -1,
       type: props.type || "MESSAGE",
@@ -25,8 +26,7 @@ class Mail extends React.Component {
       user: null,
       files: [],
       read: false,
-      archived: false,
-      info: ""
+      archived: false
     };
     this.replies = [];
     this.handleReplyContent = this.handleReplyContent.bind(this);
@@ -58,7 +58,8 @@ class Mail extends React.Component {
       });
     } else {
       api.getMailFromAll(this.state.messageId).then(data => {
-        var threadMessage = [];
+        let expiryDate = this.epochSecondToDate(data.expiryTimestamp.epochSecond, true)
+        let threadMessage = [];
         threadMessage.push(data);
         this.setState((prevState, props) => ({
           mails: threadMessage,
@@ -67,6 +68,12 @@ class Mail extends React.Component {
           id: data.messageId,
           subject: data.subject
         }));
+
+        if (expiryDate !== "") {
+          this.setState((prevState, props) => ({
+            info: "This notification will expire on " + expiryDate + "."
+          }));
+        }
 
         if (!this.state.read) {
           let statusBody = {};
@@ -90,6 +97,14 @@ class Mail extends React.Component {
     this.setState({ html: event.target.value });
   };
 
+  totalFileSize = (files) => {
+    let totalFileSize = 0
+    files.map((file) => {
+      totalFileSize = totalFileSize + file.rawSize
+    })
+    return totalFileSize
+  }
+
   handleShowAttach = () => {
     this.setState((prevState, props) => ({
       showAttach: !this.state.showAttach
@@ -102,21 +117,31 @@ class Mail extends React.Component {
   handleSend = () => {
     let reply = {};
 
-    reply.subject =
-      this.state.subject.indexOf("Re:") > -1
-        ? this.state.subject
-        : "Re: " + this.state.subject;
-    reply.body = this.state.html;
-    reply.linkedAttachment = this.state.files;
-    reply.parentId = this.state.id;
+    let totalFileSize = this.totalFileSize(this.state.files)
 
-    api.sendMail(reply).then(data => {
-      this.props.callbackSetMessage(
-        "success",
-        "Message " + '"' + this.state.subject + '"' + " has been sent"
-      ),
-        this.props.callbackCloseSelf();
-    });
+    if(totalFileSize < 10485760) {
+      reply.subject =
+        this.state.subject.indexOf("Re:") > -1
+          ? this.state.subject
+          : "Re: " + this.state.subject;
+      reply.body = this.state.html;
+      reply.linkedAttachment = this.state.files;
+      reply.parentId = this.state.id;
+
+      api.sendMail(reply).then(data => {
+        this.props.callbackSetMessage(
+          "success",
+          "Message " + '"' + this.state.subject + '"' + " has been sent"
+        ),
+          this.props.callbackCloseSelf();
+      });
+    } else {
+      let readableFileSize = this.bytesToSize(totalFileSize)
+      this.setState((prevState, props) => ({
+        error: "Total attachment size limit is 10Mb.  Your current attachment size is " + readableFileSize + "."
+      }));
+      window.scroll(0,0)
+    }
   };
 
   clearAttachment = () => {
@@ -237,10 +262,10 @@ class Mail extends React.Component {
     return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
   };
 
-  epochSecondToDate = epochSecond => {
+  epochSecondToDate = (epochSecond, onlyDate) => {
     var eps = epochSecond * 1000;
     var m = moment(eps);
-    var s = m.format("D/M/YYYY hh:mm:ss");
+    let s = onlyDate ? m.format("D/M/YYYY") : m.format("D/M/YYYY hh:mm:ss")
     return s;
   };
 
@@ -381,7 +406,7 @@ class Mail extends React.Component {
                       Sent:{" "}
                       <span className="text-normal">
                         {this.epochSecondToDate(
-                          reply.messageTimestamp.epochSecond
+                          reply.messageTimestamp.epochSecond, false
                         )}
                       </span>
                     </span>
