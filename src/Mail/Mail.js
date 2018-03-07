@@ -286,6 +286,8 @@ class Mail extends React.Component {
           Back{" "}
         </a>
 
+        <Messages success={this.state.success} error={this.state.error} info={this.state.info} />
+
         <div
           className=""
           className={
