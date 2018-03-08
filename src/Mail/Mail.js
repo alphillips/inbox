@@ -82,7 +82,8 @@ class Mail extends React.Component {
   handleReplyState = () => {
     this.setState((prevState, props) => ({
       replyState: !this.state.replyState,
-      showAttach: false
+      showAttach: false,
+      error: ""
     }));
     this.clearAttachment();
     this.clearReplyContent();
@@ -102,7 +103,8 @@ class Mail extends React.Component {
 
   handleShowAttach = () => {
     this.setState((prevState, props) => ({
-      showAttach: !this.state.showAttach
+      showAttach: !this.state.showAttach,
+      error: ""
     }));
     if (!this.state.showAttach) {
       this.clearAttachment();
@@ -219,7 +221,8 @@ class Mail extends React.Component {
     var index = e.target.getAttribute("data-value");
     array.splice(index, 1);
     this.setState((prevState, props) => ({
-      files: array
+      files: array,
+      error: ""
     }));
   };
 
