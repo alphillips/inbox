@@ -132,7 +132,7 @@ class Mail extends React.Component {
       });
     } else {
       this.setState((prevState, props) => ({
-        error: "Attachment upload has exceeded 10Mb.  Remove some attachments and try again."
+        error: "Attachment upload has exceeded 10MB.  Remove some attachments and try again."
       }));
       window.scroll(0,0)
     }
