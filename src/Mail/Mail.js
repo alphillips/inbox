@@ -131,9 +131,8 @@ class Mail extends React.Component {
           this.props.callbackCloseSelf();
       });
     } else {
-      let readableFileSize = this.bytesToSize(totalFileSize)
       this.setState((prevState, props) => ({
-        error: "Attachment size upload has a limit of 10Mb.  Remove some attachments and try and send again. You are trying to upload " + readableFileSize + "."
+        error: "Attachment upload has exceeded 10Mb.  Remove some attachments and try again."
       }));
       window.scroll(0,0)
     }
