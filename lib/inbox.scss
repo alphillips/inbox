@@ -36,6 +36,10 @@ $inbox-border: darken(whitesmoke, 20%);
   .inbox {
     padding-bottom: 10px;
 
+    li:first-of-type{
+      border-top: 1px solid #999999;
+    }
+
     @media screen and (min-width: 992px){
       padding-bottom: 0;
     }
