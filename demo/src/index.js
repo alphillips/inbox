@@ -13,7 +13,7 @@ class Demo extends Component {
 
   render() {
     return (
-      <Inbox  />
+      <Inbox showArchived={false} />
     )
   }
 }

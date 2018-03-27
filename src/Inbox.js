@@ -18,7 +18,7 @@ class Inbox extends React.Component {
       success: props.success,
       error: props.error,
       attachment: false,
-      showArchived: false,
+      showArchived: props.showArchived||false,
       messageId: null,
       type: "",
       showMail: false
