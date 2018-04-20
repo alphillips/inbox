@@ -77,6 +77,11 @@ class Mail extends React.Component {
         }
       });
     }
+    this.refreshCount()
+  }
+
+  refreshCount = () => {
+    this.props.refreshCount()
   }
 
   handleReplyState = () => {
@@ -270,6 +275,7 @@ class Mail extends React.Component {
   onClose = () => {
     this.props.callbackCloseSelf();
     this.props.callbackSetMessage("success", "");
+    this.refreshCount()
   };
 
   render() {

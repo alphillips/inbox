@@ -35,6 +35,10 @@ class Inbox extends React.Component {
     }
   };
 
+  refreshCount = () => {
+    this.props.refreshCount()
+  }
+
   updateList = () => {
     api.getMails().then(data => {
       this.setState((prevState, props) => ({
@@ -47,6 +51,7 @@ class Inbox extends React.Component {
         archives: data
       }));
     });
+    this.refreshCount()
   };
 
   backToInboxHome = () => {
@@ -104,6 +109,7 @@ class Inbox extends React.Component {
           type={this.state.type}
           callbackCloseSelf={this.callbackCloseSelf}
           callbackSetMessage={this.callbackSetMessage}
+          refreshCount={this.refreshCount}
         />
       );
     }
