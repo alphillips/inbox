@@ -30,17 +30,10 @@ class Inbox extends React.Component {
   };
 
   componentWillReceiveProps = nextProps => {
-  if (nextProps.view === "inbox") {
-    this.setState((prevState, props) => ({
-      view: null,
-      showArchived: false,
-      showMail: false
-    }));
-  }
-  if(nextProps.view !== "inbox") {
-    this.backToInboxHome()
-  }
-};
+    if(nextProps.view !== "inbox") {
+      this.backToInboxHome()
+    }
+  };
 
   updateList = () => {
     api.getMails().then(data => {
