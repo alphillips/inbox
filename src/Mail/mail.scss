@@ -246,3 +246,22 @@ $notification-info: darken(#00C2ED, 15%);
 .back-button {
 	margin-top: 1em;
 }
+
+div[class^="reply-mail-"] {
+  .mail-from {
+    border-bottom: none;
+    border-top: 1px solid #ddd;
+  }
+  .mail-subject-container{
+    border-bottom: none;
+  }
+}
+.reply-mail-0 {
+  .mail-from {
+    border-bottom: 1px solid #ddd!important;
+    border-top: none!important;
+  }
+  .mail-subject-container{
+    border-bottom: 1px solid #ddd!important;
+  }
+}

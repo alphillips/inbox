@@ -343,8 +343,8 @@ class Mail extends React.Component {
             )}
 
             {this.state.mails &&
-              this.state.mails.map(reply => (
-                <div key={reply.messageId}>
+              this.state.mails.map((reply, i) => (
+                <div key={reply.messageId} className={"reply-mail-"+i}>
                   <div className="mail-from">
                     From: <span className="text-normal">{reply.fromParty}</span>
                     {!this.state.replyState && (
