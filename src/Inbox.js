@@ -29,6 +29,16 @@ class Inbox extends React.Component {
     this.updateList()
   };
 
+  componentWillReceiveProps = nextProps => {
+    if(nextProps.view !== "inbox") {
+      this.backToInboxHome()
+    }
+  };
+
+  refreshCount = () => {
+    this.props.refreshCount()
+  }
+
   updateList = () => {
     api.getMails().then(data => {
       this.setState((prevState, props) => ({
@@ -41,7 +51,18 @@ class Inbox extends React.Component {
         archives: data
       }));
     });
+    this.refreshCount()
   };
+
+  backToInboxHome = () => {
+    this.setState((prevState, props) => ({
+      showMail: false,
+      showArchived: false,
+      error: "",
+      info:"",
+      success:""
+    }));
+  }
 
   epochSecondToDate = epochSecond => {
     var eps = epochSecond * 1000;
@@ -88,6 +109,7 @@ class Inbox extends React.Component {
           type={this.state.type}
           callbackCloseSelf={this.callbackCloseSelf}
           callbackSetMessage={this.callbackSetMessage}
+          refreshCount={this.refreshCount}
         />
       );
     }
