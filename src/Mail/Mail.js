@@ -101,7 +101,7 @@ class Mail extends React.Component {
   totalFileSize = (files) => {
     let totalFileSize = 0
     files.map((file) => {
-      totalFileSize = totalFileSize + file.rawSize
+      totalFileSize = totalFileSize + file.size
     })
     return totalFileSize
   }
@@ -207,8 +207,7 @@ class Mail extends React.Component {
       reader.onload = () => {
         fileObj.name = file.name;
         fileObj.mimeType = file.type;
-        fileObj.size = this.bytesToSize(file.size);
-        fileObj.rawSize = file.size
+        fileObj.size = file.size;
         fileObj.data = unescape(
           encodeURIComponent(reader.result.split(",")[1])
         );
@@ -333,7 +332,7 @@ class Mail extends React.Component {
                           onClick={this.removeFile.bind(this)}
                           key={f.name}
                         >
-                          {f.name} - {f.size}
+                          {f.name} - {this.bytesToSize(f.size)}
                         </li>
                       ))}
                     </ul>
