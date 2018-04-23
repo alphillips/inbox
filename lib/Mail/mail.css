@@ -34,9 +34,8 @@
     margin-top: 10px;
     background-color: white; }
   .nexdoc-mail .mail-from, .nexdoc-mail .mail-subject-container {
-    border-bottom: 1px solid #ddd;
     padding: 1em;
-    font-weight: bold;
+    font-weight: normal;
     font-size: 90%; }
   .nexdoc-mail .text-normal {
     font-weight: normal; }
@@ -46,7 +45,6 @@
       margin-left: 5px; }
   .nexdoc-mail .mail-date {
     display: block;
-    font-weight: bold;
     padding-top: 1em; }
   .nexdoc-mail .mail-body-container {
     padding: 1em;
@@ -167,15 +165,20 @@
   margin-top: 1em; }
 
 div[class^="reply-mail-"] .mail-from {
-  border-bottom: none;
-  border-top: 1px solid #ddd; }
+  border-top: 1px solid #ddd;
+  padding-bottom: 0;
+  padding-top: 20px; }
 
 div[class^="reply-mail-"] .mail-subject-container {
   border-bottom: none; }
 
 .reply-mail-0 .mail-from {
-  border-bottom: 1px solid #ddd !important;
-  border-top: none !important; }
+  border-top: none !important;
+  font-weight: bold !important;
+  border-bottom: 0 !important; }
 
 .reply-mail-0 .mail-subject-container {
-  border-bottom: 1px solid #ddd !important; }
+  font-weight: bold !important; }
+
+.reply-mail-0 .mail-date {
+  font-weight: bold !important; }

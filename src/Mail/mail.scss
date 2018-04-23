@@ -55,7 +55,6 @@ $notification-info: darken(#00C2ED, 15%);
   }
 
   .mail-from, .mail-subject-container{
-    border-bottom: 1px solid $border-grey;
     padding: 1em;
     font-weight: normal;
     font-size: 90%;
@@ -248,7 +247,6 @@ $notification-info: darken(#00C2ED, 15%);
 
 div[class^="reply-mail-"] {
   .mail-from {
-    border-bottom: none;
     border-top: 1px solid #ddd;
     padding-bottom: 0;
     padding-top: 20px;
@@ -259,9 +257,9 @@ div[class^="reply-mail-"] {
 }
 .reply-mail-0 {
   .mail-from {
-    border-bottom: 1px solid #ddd!important;
     border-top: none!important;
     font-weight: bold!important;
+    border-bottom: 0!important;
   }
   .mail-subject-container{
     font-weight: bold!important;
