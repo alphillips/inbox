@@ -422,7 +422,7 @@ class Mail extends React.Component {
                     )}
 
                     {this.state.type === "MESSAGE" &&
-                      reply.linkedAttachment && (
+                      (reply.linkedAttachment && reply.linkedAttachment.length > 0) && (
                         <span className="mail-date">
                           Attachment:
                           <span className="text-normal">

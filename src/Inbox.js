@@ -156,7 +156,7 @@ class Inbox extends React.Component {
                                   mail.messageTimestamp.epochSecond
                                 )}
                               </span>
-                              {this.state.attachment && (
+                              {this.state.attachment &&  (
                                 <span className="inbox-attachment" />
                               )}
                               <span className="inbox-from">
