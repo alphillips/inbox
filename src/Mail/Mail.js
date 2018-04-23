@@ -74,7 +74,6 @@ class Mail extends React.Component {
           let statusBody = {};
           statusBody.messageId = this.state.id;
           statusBody.status = true;
-          this.refreshCount()
         }
       });
     }
