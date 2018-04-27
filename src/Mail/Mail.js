@@ -118,27 +118,34 @@ class Mail extends React.Component {
   handleSend = () => {
     let reply = {};
 
-    let totalFileSize = this.totalFileSize(this.state.files)
+    if(this.state.html && this.state.html !== "") {
+      let totalFileSize = this.totalFileSize(this.state.files)
 
-    if(totalFileSize < 10485760) {
-      reply.subject =
-        this.state.subject.indexOf("Re:") > -1
-          ? this.state.subject
-          : "Re: " + this.state.subject;
-      reply.body = this.state.html;
-      reply.linkedAttachment = this.state.files;
-      reply.parentId = this.state.id;
+      if(totalFileSize < 10485760) {
+        reply.subject =
+          this.state.subject.indexOf("Re:") > -1
+            ? this.state.subject
+            : "Re: " + this.state.subject;
+        reply.body = this.state.html;
+        reply.linkedAttachment = this.state.files;
+        reply.parentId = this.state.id;
 
-      api.sendMail(reply).then(data => {
-        this.props.callbackSetMessage(
-          "success",
-          "Message " + '"' + this.state.subject + '"' + " has been sent"
-        ),
-          this.props.callbackCloseSelf();
-      });
+        api.sendMail(reply).then(data => {
+          this.props.callbackSetMessage(
+            "success",
+            "Message " + '"' + this.state.subject + '"' + " has been sent"
+          ),
+            this.props.callbackCloseSelf();
+        });
+      } else {
+        this.setState((prevState, props) => ({
+          error: "Attachment upload has exceeded 10MB.  Remove some attachments and try again."
+        }));
+        window.scroll(0,0)
+      }
     } else {
       this.setState((prevState, props) => ({
-        error: "Attachment upload has exceeded 10MB.  Remove some attachments and try again."
+        error: "Please provide message"
       }));
       window.scroll(0,0)
     }
