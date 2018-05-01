@@ -53,7 +53,7 @@ class Mail extends React.Component {
       });
     } else {
       api.getMailFromAll(this.state.messageId).then(data => {
-        let expiryDate = data.expiryTimestamp.epochSecond ? this.epochSecondToDate(data.expiryTimestamp.epochSecond, true) : ""
+        let expiryDate = (data.expiryTimestamp && data.expiryTimestamp.epochSecond) ? this.epochSecondToDate(data.expiryTimestamp.epochSecond, true) : null
         let threadMessage = [];
         threadMessage.push(data);
         this.setState((prevState, props) => ({
@@ -64,7 +64,7 @@ class Mail extends React.Component {
           subject: data.subject
         }));
 
-        if (expiryDate && expiryDate !== "") {
+        if (expiryDate && expiryDate !== null) {
           this.setState((prevState, props) => ({
             info: "This notification will expire on " + expiryDate + "."
           }));
