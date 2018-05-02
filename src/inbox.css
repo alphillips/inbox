@@ -98,7 +98,6 @@
         z-index: 100; }
       .nexdoc-inbox .inbox .unread .inbox-subject {
         font-weight: 600;
-        width: 80%;
         color: #1B7991; }
       .nexdoc-inbox .inbox .unread .inbox-date {
         color: #1B7991;
@@ -110,6 +109,11 @@
       width: 80%;
       white-space: nowrap;
       opacity: 0.7; }
+    .nexdoc-inbox .inbox .inbox-subject {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 80%;
+      white-space: nowrap; }
   .nexdoc-inbox .inbox.archived .inbox-archive {
     background-image: url("./unarchive.svg"); }
   .nexdoc-inbox .inbox.archived .border-unread {
