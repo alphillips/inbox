@@ -40,19 +40,24 @@ class Inbox extends React.Component {
   }
 
   updateList = () => {
-    api.getMails().then(data => {
-      this.setState((prevState, props) => ({
-        mails: data
-      }));
-    });
+    this.updateInbox()
+  };
 
+  updateArchived = () => {
     api.getArchived().then(data => {
       this.setState((prevState, props) => ({
         archives: data
       }));
     });
-    this.refreshCount()
-  };
+  }
+
+  updateInbox = () => {
+    api.getMails().then(data => {
+      this.setState((prevState, props) => ({
+        mails: data
+      }));
+    });
+  }
 
   backToInboxHome = () => {
     this.setState((prevState, props) => ({
@@ -72,6 +77,11 @@ class Inbox extends React.Component {
   };
 
   showArchived = () => {
+    api.getArchived().then(data => {
+      this.setState((prevState, props) => ({
+        archives: data
+      }));
+    });
     this.setState((prevState, props) => ({
       showArchived: !this.state.showArchived,
       success: ""
