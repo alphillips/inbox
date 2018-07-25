@@ -78,7 +78,8 @@ $notification-info: darken(#00C2ED, 15%);
    padding-bottom: 0;
    font-size: 90%;
    margin-bottom: 1em;
-
+   white-space: pre-line;
+	  
    .mail-body {
      p, span {
       margin-bottom: 1em;
