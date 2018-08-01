@@ -62,10 +62,7 @@ class Inbox extends React.Component {
   backToInboxHome = () => {
     this.setState((prevState, props) => ({
       showMail: false,
-      showArchived: false,
-      error: "",
-      info:"",
-      success:""
+      showArchived: false
     }));
   }
 
