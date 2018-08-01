@@ -145,7 +145,7 @@ class Inbox extends React.Component {
                 {this.state.mails &&
                   this.state.mails.length > 0 && (
                     <div>
-                      {!this.state.showArchived &&
+                      {!this.state.showArchived && this.state.mails &&
                         this.state.mails.map(mail => (
                           <li
                             className={
@@ -183,7 +183,7 @@ class Inbox extends React.Component {
                         ))}
                     </div>
                   )}
-                {this.state.showArchived &&
+                {this.state.showArchived && this.state.archives && this.state.archives.length > 0 &&
                   this.state.archives.map(mail => (
                     <li
                       className={
