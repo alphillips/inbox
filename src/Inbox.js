@@ -41,6 +41,7 @@ class Inbox extends React.Component {
 
   updateList = () => {
     this.updateInbox()
+    this.refreshCount()
   };
 
   updateArchived = () => {

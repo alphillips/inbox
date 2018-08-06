@@ -1,6 +1,6 @@
 {
   "name": "@react-ag-components/inbox",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Inbox component",
   "main": "lib/index.js",
   "proxy": "http://localhost:3001/",
