@@ -50,8 +50,7 @@
     padding: 1em;
     padding-bottom: 0;
     font-size: 90%;
-    margin-bottom: 1em;
-    white-space: pre-line; }
+    margin-bottom: 1em; }
     .nexdoc-mail .mail-body-container .mail-body p, .nexdoc-mail .mail-body-container .mail-body span {
       margin-bottom: 1em; }
   .nexdoc-mail .mail-icon, .nexdoc-mail .btn-archive, .nexdoc-mail .btn-reply-action, .nexdoc-mail .btn-unarchive, .nexdoc-mail .btn-reply, .nexdoc-mail .btn-attach, .nexdoc-mail .action-history {
