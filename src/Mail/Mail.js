@@ -77,6 +77,7 @@ class Mail extends React.Component {
         }
       });
     }
+    this.refreshCount()
   }
 
   refreshCount = () => {
@@ -280,7 +281,6 @@ class Mail extends React.Component {
   onClose = () => {
     this.props.callbackCloseSelf();
     this.props.callbackSetMessage("success", "");
-    this.refreshCount()
   };
 
   render() {

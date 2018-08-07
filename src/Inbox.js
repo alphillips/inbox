@@ -6,6 +6,7 @@ import BackButton from "@react-ag-components/back-button";
 import Messages from "@react-ag-components/messages";
 import Mail from "./Mail";
 import moment from "moment";
+import LoadableSection from '@react-ag-components/core/lib/LoadableSection'
 
 import "./inbox.css";
 
@@ -50,6 +51,7 @@ class Inbox extends React.Component {
         archives: data
       }));
     });
+    this.refreshCount()
   }
 
   updateInbox = () => {
@@ -139,81 +141,83 @@ class Inbox extends React.Component {
             </Link>
 
             <PathwayList>
-              <div className="inbox">
-                {this.state.mails &&
-                  this.state.mails.length > 0 && (
-                    <div>
-                      {!this.state.showArchived && this.state.mails &&
-                        this.state.mails.map(mail => (
-                          <li
-                            className={
-                              "inbox-listing " + (!mail.read ? "unread" : "")
-                            }
-                            key={mail.messageId + mail.fromParty}
-                          >
-                            <div className="border-unread" />
-                            <Link
-                              onClick={this.setupMail.bind(
-                                null,
-                                mail.messageId,
-                                mail.type
-                              )}
+                <div className="inbox">
+                  <LoadableSection>
+                  {this.state.mails &&
+                    this.state.mails.length > 0 && (
+                      <div>
+                        {!this.state.showArchived && this.state.mails &&
+                          this.state.mails.map(mail => (
+                            <li
+                              className={
+                                "inbox-listing " + (!mail.read ? "unread" : "")
+                              }
+                              key={mail.messageId + mail.fromParty}
                             >
-                              <span className="inbox-date">
-                                {this.epochSecondToDate(
-                                  mail.messageTimestamp.epochSecond
+                              <div className="border-unread" />
+                              <Link
+                                onClick={this.setupMail.bind(
+                                  null,
+                                  mail.messageId,
+                                  mail.type
                                 )}
-                              </span>
-                              {this.state.attachment &&  (
-                                <span className="inbox-attachment" />
-                              )}
-                              <span className="inbox-from">
-                                {mail.fromParty}
-                              </span>
-                              <span className="inbox-subject">
-                                {mail.subject}
-                              </span>
-                              <span className="inbox-body">
-                                {mail.body.replace(/<\/?[^>]+(>|$)/g, "")}
-                              </span>
-                            </Link>
-                          </li>
-                        ))}
-                    </div>
-                  )}
-                {this.state.showArchived && this.state.archives && this.state.archives.length > 0 &&
-                  this.state.archives.map(mail => (
-                    <li
-                      className={
-                        "inbox-listing " + (!mail.read ? "unread" : "")
-                      }
-                      key={mail.messageId + mail.fromParty}
-                    >
-                      <div className="border-unread" />
-                      <Link
-                        onClick={this.setupMail.bind(
-                          null,
-                          mail.messageId,
-                          mail.type
-                        )}
+                              >
+                                <span className="inbox-date">
+                                  {this.epochSecondToDate(
+                                    mail.messageTimestamp.epochSecond
+                                  )}
+                                </span>
+                                {this.state.attachment &&  (
+                                  <span className="inbox-attachment" />
+                                )}
+                                <span className="inbox-from">
+                                  {mail.fromParty}
+                                </span>
+                                <span className="inbox-subject">
+                                  {mail.subject}
+                                </span>
+                                <span className="inbox-body">
+                                  {mail.body.replace(/<\/?[^>]+(>|$)/g, "")}
+                                </span>
+                              </Link>
+                            </li>
+                          ))}
+                      </div>
+                    )}
+                  {this.state.showArchived && this.state.archives && this.state.archives.length > 0 &&
+                    this.state.archives.map(mail => (
+                      <li
+                        className={
+                          "inbox-listing " + (!mail.read ? "unread" : "")
+                        }
+                        key={mail.messageId + mail.fromParty}
                       >
-                        <span className="inbox-date">
-                          {this.epochSecondToDate(
-                            mail.messageTimestamp.epochSecond
+                        <div className="border-unread" />
+                        <Link
+                          onClick={this.setupMail.bind(
+                            null,
+                            mail.messageId,
+                            mail.type
                           )}
-                        </span>
-                        {this.state.attachment && (
-                          <span className="inbox-attachment" />
-                        )}
-                        <span className="inbox-from">{mail.fromParty}</span>
-                        <span className="inbox-subject">{mail.subject}</span>
-                        <span className="inbox-body">
-                          {mail.body.replace(/<\/?[^>]+(>|$)/g, "")}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-              </div>
+                        >
+                          <span className="inbox-date">
+                            {this.epochSecondToDate(
+                              mail.messageTimestamp.epochSecond
+                            )}
+                          </span>
+                          {this.state.attachment && (
+                            <span className="inbox-attachment" />
+                          )}
+                          <span className="inbox-from">{mail.fromParty}</span>
+                          <span className="inbox-subject">{mail.subject}</span>
+                          <span className="inbox-body">
+                            {mail.body.replace(/<\/?[^>]+(>|$)/g, "")}
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </LoadableSection>
+                </div>
             </PathwayList>
           </div>
         )}
