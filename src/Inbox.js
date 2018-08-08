@@ -45,6 +45,14 @@ class Inbox extends React.Component {
     this.refreshCount()
   };
 
+  showArchived = () => {
+    this.updateArchived()
+    this.setState((prevState, props) => ({
+      showArchived: !this.state.showArchived,
+      success: ""
+    }));
+  };
+
   updateArchived = () => {
     api.getArchived().then(data => {
       this.setState((prevState, props) => ({
@@ -74,18 +82,6 @@ class Inbox extends React.Component {
     var m = moment(eps);
     var s = m.format("D/M/YYYY hh:mm:ss");
     return s;
-  };
-
-  showArchived = () => {
-    api.getArchived().then(data => {
-      this.setState((prevState, props) => ({
-        archives: data
-      }));
-    });
-    this.setState((prevState, props) => ({
-      showArchived: !this.state.showArchived,
-      success: ""
-    }));
   };
 
   setupMail = (id, type) => {

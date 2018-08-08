@@ -77,7 +77,6 @@ class Mail extends React.Component {
         }
       });
     }
-    this.refreshCount()
   }
 
   refreshCount = () => {
