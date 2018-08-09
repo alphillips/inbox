@@ -59,7 +59,6 @@ class Inbox extends React.Component {
         archives: data
       }));
     });
-    this.refreshCount()
   }
 
   updateInbox = () => {
