@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import Dropzone from "react-dropzone";
 import Messages from "@react-ag-components/messages";
 import moment from "moment";
+import Spinner from "@react-ag-components/core/lib/Spinner";
 
 import "./mail.css";
 
@@ -26,7 +27,8 @@ class Mail extends React.Component {
       user: null,
       files: [],
       read: false,
-      archived: false
+      archived: false,
+      loading: false
     };
     this.replies = [];
     this.handleReplyContent = this.handleReplyContent.bind(this);
@@ -117,6 +119,9 @@ class Mail extends React.Component {
 
   handleSend = () => {
     let reply = {};
+    let loading = true
+
+    this.setState({loading})
 
     if(this.state.html && this.state.html !== "") {
       let totalFileSize = this.totalFileSize(this.state.files)
@@ -139,13 +144,15 @@ class Mail extends React.Component {
         });
       } else {
         this.setState((prevState, props) => ({
-          error: "Attachment upload has exceeded 10MB.  Remove some attachments and try again."
+          error: "Attachment upload has exceeded 10MB.  Remove some attachments and try again.",
+          loading: false
         }));
         window.scroll(0,0)
       }
     } else {
       this.setState((prevState, props) => ({
-        error: "Please provide message"
+        error: "Please provide message",
+        loading: false
       }));
       window.scroll(0,0)
     }
@@ -294,6 +301,15 @@ class Mail extends React.Component {
         </a>
 
         <Messages success={this.state.success} error={this.state.error} info={this.state.info} />
+
+        {this.state.loading &&
+          <Spinner
+            size={50}
+            spinnerColor={"#1B7991"}
+            spinnerWidth={4}
+            visible={true}
+          />
+        }
 
         <div
           className=""
