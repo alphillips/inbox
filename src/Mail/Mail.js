@@ -4,7 +4,6 @@ import { Link } from "react-router";
 import Dropzone from "react-dropzone";
 import Messages from "@react-ag-components/messages";
 import moment from "moment";
-import Spinner from "@react-ag-components/core/lib/Spinner";
 
 import "./mail.css";
 
@@ -302,15 +301,6 @@ class Mail extends React.Component {
 
         <Messages success={this.state.success} error={this.state.error} info={this.state.info} />
 
-        {this.state.loading &&
-          <Spinner
-            size={50}
-            spinnerColor={"#1B7991"}
-            spinnerWidth={4}
-            visible={true}
-          />
-        }
-
         <div
           className=""
           className={
@@ -408,9 +398,11 @@ class Mail extends React.Component {
                         >
                           Discard
                         </button>
+
                         <button
                           className="btn-reply-action send"
                           onClick={this.handleSend}
+                          disabled={this.state.loading}
                         >
                           Send
                         </button>
