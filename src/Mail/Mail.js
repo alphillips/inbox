@@ -26,7 +26,8 @@ class Mail extends React.Component {
       user: null,
       files: [],
       read: false,
-      archived: false
+      archived: false,
+      loading: false
     };
     this.replies = [];
     this.handleReplyContent = this.handleReplyContent.bind(this);
@@ -117,6 +118,9 @@ class Mail extends React.Component {
 
   handleSend = () => {
     let reply = {};
+    let loading = true
+
+    this.setState({loading})
 
     if(this.state.html && this.state.html !== "") {
       let totalFileSize = this.totalFileSize(this.state.files)
@@ -139,13 +143,15 @@ class Mail extends React.Component {
         });
       } else {
         this.setState((prevState, props) => ({
-          error: "Attachment upload has exceeded 10MB.  Remove some attachments and try again."
+          error: "Attachment upload has exceeded 10MB.  Remove some attachments and try again.",
+          loading: false
         }));
         window.scroll(0,0)
       }
     } else {
       this.setState((prevState, props) => ({
-        error: "Please provide message"
+        error: "Please provide message",
+        loading: false
       }));
       window.scroll(0,0)
     }
@@ -392,9 +398,11 @@ class Mail extends React.Component {
                         >
                           Discard
                         </button>
+
                         <button
                           className="btn-reply-action send"
                           onClick={this.handleSend}
+                          disabled={this.state.loading}
                         >
                           Send
                         </button>
